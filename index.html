@@ -7,16 +7,26 @@
 </head>
 <body>
   <div class=" mt-5">
-  
-    <div class="form-group">
-      <label for="devCount">Enter the number of divs:</label>
-      <input type="number" class="form-control" id="devCount">
+    <div class="row" >
+        <div class="col-5 ml-2">
+            <div class="form-group">
+                <label for="devCount">Enter the number of divs:</label>
+                <input type="number" class="form-control" id="devCount">
+              </div>
+        </div>
+        <div class="col-4">
+            <div class="form-group">
+                <label for="youtubeUrl">Enter YouTube URL:</label>
+                <input type="text" class="form-control" id="youtubeUrl">
+              </div>
+        </div>
+        <div class="col-2 mt-4">
+            <button type="button" class="btn btn-primary" id="generateBtn">Generate Videos</button>
+        </div>
     </div>
-    <div class="form-group">
-      <label for="videoId">Enter YouTube VIDEO_ID:</label>
-      <input type="text" class="form-control" id="videoId">
-    </div>
-    <button type="button" class="btn btn-primary" id="generateBtn">Generate Videos</button>
+   
+    
+    
     <hr>
     <div class="row" id="videoContainer"></div>
   </div>
@@ -28,9 +38,12 @@
   <script>
     $(document).ready(function() {
       $("#generateBtn").click(function() {
-        // Get the count of divs and the YouTube VIDEO_ID from input fields
+        // Get the count of divs and the YouTube URL from input fields
         var divCount = parseInt($("#devCount").val());
-        var videoId = $("#videoId").val();
+        var youtubeUrl = $("#youtubeUrl").val();
+
+        // Extract the VIDEO_ID from the YouTube URL
+        var videoId = extractVideoId(youtubeUrl);
 
         // Clear existing videos from the container
         $("#videoContainer").empty();
@@ -53,6 +66,12 @@
           $("#videoContainer").append(newDiv);
         }
       });
+
+      function extractVideoId(url) {
+        // Extract the VIDEO_ID from the YouTube URL
+        var match = url.match(/[?&]v=([^&]+)/);
+        return match ? match[1] : null;
+      }
     });
   </script>
 </body>
